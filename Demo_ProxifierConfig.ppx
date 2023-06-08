@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxifierProfile version="102" platform="Windows" product_id="0" product_minver="400">
+	<Options>
+		<Resolve>
+			<AutoModeDetection enabled="true" />
+			<ViaProxy enabled="false" />
+			<BlockNonATypes enabled="false" />
+			<ExclusionList OnlyFromListMode="false">%ComputerName%; localhost; *.local</ExclusionList>
+			<DnsUdpMode>0</DnsUdpMode>
+		</Resolve>
+		<Encryption mode="disabled" />
+		<ConnectionLoopDetection enabled="true" resolve="true" />
+		<Udp mode="mode_bypass" />
+		<LeakPreventionMode enabled="false" />
+		<ProcessOtherUsers enabled="false" />
+		<ProcessServices enabled="false" />
+		<HandleDirectConnections enabled="false" />
+		<HttpProxiesSupport enabled="false" />
+	</Options>
+	<ProxyList>
+		<Proxy id="100" type="HTTPS">
+			<UserAgent>Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)</UserAgent>
+			<Options>50</Options>
+			<Port>8080</Port>
+			<Address>xx.demo.com</Address>
+		</Proxy>
+	</ProxyList>
+	<ChainList>
+		<Chain id="100" type="load_balancing">
+			<LoadBalancingSameProxyForPid>false</LoadBalancingSameProxyForPid>
+			<Proxy enabled="false">100</Proxy>
+			<Name>Proxy_pool</Name>
+		</Chain>
+	</ChainList>
+	<RuleList>
+		<Rule enabled="true">
+			<Action type="Direct" />
+			<Targets>localhost; 127.0.0.1; %ComputerName%; ::1</Targets>
+			<Name>Localhost</Name>
+		</Rule>
+		<Rule enabled="true">
+			<Action type="Chain">100</Action>
+			<Name>Proxy_pool</Name>
+		</Rule>
+	</RuleList>
+</ProxifierProfile>
