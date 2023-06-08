@@ -9,7 +9,7 @@ import requests
 proxies_list = []
 
 #筛选可用的代理
-def check(proxy_url):
+def check(proxy_url,check_url):
     try:
         parsed_proxy = proxy_url.split("://")
         scheme = parsed_proxy[0]
@@ -26,8 +26,7 @@ def check(proxy_url):
                 scheme: f"{scheme}://{address}",
                 "https": f"{scheme}://{address}"
             }
-        url = "https://www.baidu.com"
-        rsp = requests.get(url, proxies=proxy, timeout=5)
+        rsp = requests.get(check_url, proxies=proxy, timeout=5)
         if rsp.status_code == 200:
             print(f"\033[32m Success\033[0m：{proxy_url}")
             with open('proxy_success.txt', 'a') as f:
@@ -87,7 +86,7 @@ def create_proxifier_config(ProxifierConfig_name):
     print(f"\n新的Proxifier配置文件已生成：{ProxifierConfig_name}\n")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="python3 Proxifier_ProxyPool.py -f proxy_list.txt -o test.ppx")
+    parser = argparse.ArgumentParser(description="python3 Proxifier_ProxyPool.py -f proxy_list.txt -o test.ppx -c https://baidu.com")
     parser.add_argument("-f", "--file", help="指定要打开的代理列表文件，每行一个")
     parser.add_argument("-o", "--output", help="输出新的配置文件名称，默认:NewProxifierConfig.ppx",default="New_ProxifierConfig.ppx")
     parser.add_argument("-c", "--check", help="指定验证代理网址，默认:https://baidu.com",default="https://baidu.com")
@@ -98,6 +97,6 @@ if __name__ == "__main__":
             proxy_list = [line.strip() for line in f.readlines()]
         with ThreadPoolExecutor(max_workers=50) as m:
             for proxy_url in proxy_list:
-                m.submit(check, proxy_url)
+                m.submit(check, proxy_url,args.check)
         print("\n可用代理已输出至：proxy_success.txt")
         create_proxifier_config(args.output)
