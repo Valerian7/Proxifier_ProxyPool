@@ -24,3 +24,6 @@ optional arguments:
 ## 使用效果
 
 ![image](https://github.com/Valerian7/Proxifier_ProxyPool/assets/46412054/22661a88-c548-43ff-ab5f-977bd8ee0f41)
+
+![image](https://github.com/Valerian7/Proxifier_ProxyPool/assets/46412054/46ca031a-ea63-4aaf-89dd-e1239f3d6279)
+
